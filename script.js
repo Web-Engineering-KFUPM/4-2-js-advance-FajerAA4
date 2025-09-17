@@ -9,7 +9,7 @@ INSTRUCTIONS:
 */
 
 //You can uncomment the console.log code to check if your js file is connected with html file or not.
-//console.log("%cJS Lab Connected — Start completing the TODOs for Advance JavaScript!", "font-weight:bold; font-size:14px");
+console.log("%cJS Lab Connected — Start completing the TODOs for Advance JavaScript!", "font-weight:bold; font-size:14px");
 
 // ==========================
 // TODO-1: OBJECT with GETTERS & SETTERS
@@ -21,6 +21,29 @@ Task:
 3) Add a setter updateGpa(newGpa) or use a set accessor for gpa that validates 0.0–4.0.
 4) Create an instance/object and output its attributes using the getter(s).
 */
+const Student = {
+    firstName: "Fajer",
+    lastName: "Alyami",
+    _gpa: 3.8,             // underscore means "internal field" by convention
+    get fullName() {       // computed when read
+        return this.firstName + " " + this.lastName;
+    },
+    get gpa() {            // safe read access
+        return this._gpa;
+    },
+    set gpa(value) {       // safe write access with validation
+        if (value >= 0 && value <= 4) {
+            this._gpa = value;
+        }
+        else{
+            console.log("Invalid gpa. Must be between 0.0 and 4.0");
+        }
+    }
+};
+console.log(Student.fullName,"GPA:",Student.gpa);
+Student.gpa =3.9;
+console.log("Updated gpa:",Student.gpa);
+// Use like normal properties: person.fullName; person.gpa; person.gpa = 3.9;
 
 // ====================================
 // TODO-2: OBJECT AS MAP + for...in LOOP
@@ -30,7 +53,14 @@ Task:
 1) Make an object used as a "map" (key → value), e.g., course codes → titles.
 2) Iterate over it with for...in and display each key and value.
 */
+const courseCodes = { A101: "Intro", Ics202: "Data Structures", Swe363:"Web Management" };
 
+for (const key in courseCodes) {
+    // key will be "A101", then "A201", ...
+    // value is courseTitles[key]
+    console.log(key,courseCodes[key]);
+}
+//Object.entries(courseCodes).forEach(([Key, value]) => {console.log(Key,value)});
 // =========================================
 // TODO-3: STRING OBJECT — charAt() & length
 // =========================================
@@ -39,7 +69,10 @@ Task:
 1) Create a String object or plain string.
 2) Use .charAt(index) and .length to output characters and size.
 */
-
+const str = "Hello LabSWE";
+console.log("Length:",str.length);     // 5
+console.log("First char:",str.charAt(0));  // "H"
+console.log("Last char:",str.charAt(str.length-1));  // "o"
 // ===================================
 // TODO-4: DATE — day, month, and year
 // ===================================
@@ -49,7 +82,10 @@ Task:
 2) Find and display the current day of month, month (0–11), and year.
 //    (Hint: getDate(), getMonth(), getFullYear() )
 */
-
+const d = new Date();
+console.log("Day",d.getDate());      // Day of month: 1–31
+console.log("Month:",d.getMonth());     // Month index: 0–11  (0 = January, 11 = December)
+console.log("YEar:",d.getFullYear());  // 4-digit year, e.g., 2025
 // ============================================================
 // TODO-5: ARRAY + SPREAD — find MIN and MAX from 10 numbers
 // ============================================================
@@ -59,7 +95,11 @@ Task:
 2) Use spread syntax with Math.min(...) and Math.max(...) to find extremes.
 3) Display both values.
 */
-
+const nums = [10, 2, 30,40,50,60,70,80,90,100];
+const min = Math.min(...nums);  // same as Math.min(10, 2, 30)
+const max = Math.max(...nums);
+console.log("Min:",min);
+console.log("Max:",max);
 // ===================================================================
 // TODO-6: EXCEPTIONS — try/catch/finally with EMPTY ARRAY edge case
 // ===================================================================
@@ -70,7 +110,23 @@ Task:
 3) Handle the error using try { ... } catch (e) { ... } finally { ... } and log messages
    in each block so you can see the flow of control.
 */
+function firstItem(arr) {
+    if (!Array.isArray(arr) || arr.length === 0) {
+        throw new Error("Array must be non-empty.");
+    }
+    return Math.max(...arr);
+}
 
+try {
+    const x = firstItem([]);   // This will throw
+    console.log("Max value:",x);
+} catch (e) {
+    // Handle or log the error here
+    console.log("the error is:",e.message);
+} finally {
+    // This block always runs
+    console.log("Finally block:");
+}
 // ===================================================================================
 // TODO-7: REGEX + forEach — find words containing 'ab' and log matches from the list
 // ===================================================================================
@@ -82,5 +138,12 @@ Given: const words = ["ban", "babble", "make", "flab"];
 3) For matches, log "<word> matches!".
 4) Display the words that matches the pattern.
 */
+const words = ["ban", "babble", "make", "flab"];
+const re = /ab/;
 
+words.forEach(word => {
+    if (re.test(word)) {
+         console.log(`${word} matches!`);
+    }
+});
 // End of Advance JavaScript Lab — good luck!
